@@ -10,8 +10,13 @@ class Program
     {
         System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
-        // Ruta al archivo Excel
-        string excelFilePath = "C:\\Users\\a.rodriguez\\Downloads\\listadopet.xls";
+        // Pedir al usuario la ruta al archivo Excel
+        Console.Write("Ingrese la ruta completa del archivo Excel: ");
+        string excelFilePath = Console.ReadLine();
+
+        // Pedir al usuario la ruta de salida para los archivos JSON
+        Console.Write("Ingrese la ruta de salida para los archivos JSON (sin el nombre del archivo, solo la carpeta): ");
+        string outputDirectory = Console.ReadLine();
 
         // Leer el archivo Excel y convertirlo a DataSet
         DataSet dataSet;
@@ -51,7 +56,7 @@ class Program
             var jsonResult = JsonConvert.SerializeObject(partTable, Newtonsoft.Json.Formatting.Indented);
 
             // Guardar el JSON en un archivo
-            string jsonFilePath = $"C:\\Users\\a.rodriguez\\Downloads\\listadopet_part{i + 1}.json";
+            string jsonFilePath = Path.Combine(outputDirectory, $"listadopet_part{i + 1}.json");
             File.WriteAllText(jsonFilePath, jsonResult);
         }
 
